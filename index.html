@@ -20,12 +20,92 @@
   <link rel="apple-touch-icon" sizes="152x152" href="./assets/icons/apple-icon-152x152.png" />
   <link rel="apple-touch-icon" sizes="180x180" href="./assets/icons/apple-icon-180x180.png" />
 
-  <link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
+    media="screen,projection">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <link href="styles.css" rel="stylesheet" type="text/css" />
 </head>
 
 <body>
-  Hello world
-  <script src="script.js"></script>
+  <div class="container forms form-content">
+    <form class="col s12" id="login-form">
+      <h2>Login</h2>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="username" name="username" type="text" class="validate" required>
+          <label for="username">Usuário</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="password" name="password" type="password" class="validate" required>
+          <label for="password">Senha</label>
+          <span id="toggle-password" class="field-icon" onclick="togglePassword()">
+            <span id="password-icon" class="material-icons">visibility</span>
+          </span>
+        </div>
+
+        <div class="col s12 full-width">
+          <a class="waves-effect waves-light btn full-width" onclick="login()">Login</a>
+        </div>
+      </div>
+      <div class="row">
+        <h6 class="col s12 center-align">ou</h6>
+        <a class="waves-effect waves-teal btn-flat col s12 center-align" onclick="showSignupPage()">Cadastre-se</a>
+      </div>
+    </form>
+
+    <form class="col s12 hide" id="signup-form">
+      <h2>Cadastro</h2>
+      <div class="row">
+        <div class="input-field col s12">
+          <input id="signup-username" name="username" type="text" class="validate" required>
+          <label for="signup-username">Usuário</label>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="signup-password" name="password" type="password" class="validate" required>
+          <label for="signup-password">Senha</label>
+          <span id="sign-up-toggle-password" class="field-icon" onclick="signupTogglePassword()">
+            <span id="signup-password-icon" class="material-icons">visibility</span>
+          </span>
+        </div>
+
+        <div class="input-field col s12">
+          <input id="signup-confirm-password" name="confirmPassword" type="password" class="validate" required>
+          <label for="signup-confirm-password">Confirmar senha</label>
+        </div>
+
+        <div class="col s12 full-width">
+          <a class="waves-effect waves-light btn full-width" onclick="signup()">Cadastrar</a>
+        </div>
+      </div>
+      <div class="row">
+        <a class="waves-effect waves-teal btn-flat col s12 center-align" onclick="showLoginPage()">Já possui uma
+          conta?
+          Entrar</a>
+      </div>
+    </form>
+  </div>
+
+  <div class="full-size hide" id="home">
+    <nav>
+      <div class="nav-wrapper">
+        <a class="brand-logo center">Batidas de Ponto</a>
+        <ul class="right">
+          <li><a onclick="logout()"><i class="material-icons">logout</i></a></li>
+        </ul>
+        <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+      </div>
+    </nav>
+
+    <ul class="sidenav" id="mobile-demo">
+      <li><a>Sass</a></li>
+    </ul>
+  </div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+  <script src="index.js"></script>
 </body>
 
 </html>
