@@ -1,3 +1,14 @@
-.wow {
-  width: 100px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Poppins, Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    font-weight: normal;
+    line-height: 1.5rem;
+}
+
+@font-face {
+    font-family: Poppins;
+    src: url(./assets/fonts/Poppins-Regular.ttf);
 }
