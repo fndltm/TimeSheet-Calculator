@@ -89,19 +89,32 @@
   </div>
 
   <div class="full-size hide" id="home">
-    <nav>
-      <div class="nav-wrapper">
-        <a class="brand-logo center">Batidas de Ponto</a>
-        <ul class="right">
-          <li><a onclick="logout()"><i class="material-icons">logout</i></a></li>
-        </ul>
-        <a data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      </div>
-    </nav>
+    <div class="navbar-fixed">
+      <nav>
+        <div class="nav-wrapper">
+          <a class="brand-logo center">Batidas de Ponto</a>
+          <ul class="right">
+            <li><a onclick="logout()"><i class="material-icons">logout</i></a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
 
-    <ul class="sidenav" id="mobile-demo">
-      <li><a>Sass</a></li>
-    </ul>
+    <div class="empty-list" id="empty-list">
+      <img class="empty-list-image" src="./assets/images/timesheet_calculator.svg" />
+      <h6>Nenhuma batida inserida!</h6>
+    </div>
+
+    <div id="clocks">
+      <div class="fixed-action-btn">
+        <a class="btn-floating btn-large red">
+          <i class="large material-icons">mode_edit</i>
+        </a>
+        <ul>
+          <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
+        </ul>
+      </div>
+    </div>
   </div>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>

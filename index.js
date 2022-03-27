@@ -2,17 +2,19 @@ const users = JSON.parse(localStorage.getItem('users')) || [];
 const user = JSON.parse(localStorage.getItem('loggedUser')) || undefined;
 
 const formsWrapper = document.getElementsByClassName('forms')[0];
+const emptyList = document.getElementById('empty-list');
 
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
 const homePage = document.getElementById('home');
 
 onload = () => {
+    M.Sidenav.init(document.querySelectorAll('.sidenav'), null);
+    M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), null);
+
     if (user) {
         showHomePage();
     }
-
-    M.Sidenav.init(document.querySelectorAll('.sidenav'), null);
 };
 
 togglePassword = () => {
@@ -52,7 +54,7 @@ login = () => {
 showSignupPage = () => {
     loginForm.classList.add('hide');
     homePage.classList.add('hide');
-    
+
     formsWrapper.classList.remove('hide');
     signupForm.classList.remove('hide');
 };
@@ -78,7 +80,8 @@ signup = () => {
 
     users.push({
         username: signupForm.username.value,
-        password: signupForm.password.value
+        password: signupForm.password.value,
+        clocks: []
     });
 
     localStorage.setItem('users', JSON.stringify(users));
@@ -94,6 +97,12 @@ showHomePage = () => {
     signupForm.classList.add('hide');
 
     homePage.classList.remove('hide');
+
+    if (user && user.clocks.length === 0) {
+        emptyList.classList.remove('hide');
+    } else {
+        emptyList.classList.add('hide');
+    }
 };
 
 logout = () => {
