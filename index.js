@@ -73,10 +73,10 @@ function signupTogglePassword() {
 };
 
 function login() {
-    const user = users.find(function (user) { return user.username === loginForm.username.value && user.password === loginForm.password.value; });
-    if (user) {
-        localStorage.setItem('loggedUser', JSON.stringify(user));
-        showHomePage();
+    const findUser = users.find(function (user) { return user.username === loginForm.username.value && user.password === loginForm.password.value; });
+    if (findUser) {
+        localStorage.setItem('loggedUser', JSON.stringify(findUser));
+        window.location.reload();
     } else {
         M.toast({ html: 'Usuário e/ou senha incorretos!' });
     }
@@ -123,6 +123,10 @@ function signup() {
 };
 
 function showHomePage() {
+    while (clocksList.firstChild) {
+        clocksList.removeChild(clocksList.lastChild);
+    }
+
     formsWrapper.classList.add('hide');
     loginForm.classList.add('hide');
     signupForm.classList.add('hide');
@@ -247,7 +251,7 @@ function formatWithZero(value) {
 function logout() {
     localStorage.removeItem('loggedUser');
 
-    showLoginPage();
+    window.location.reload();
 };
 
 function clockIn() {
