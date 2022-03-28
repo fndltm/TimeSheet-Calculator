@@ -107,18 +107,59 @@
 
     <div id="clocks">
       <div class="fixed-action-btn">
-        <a class="btn-floating btn-large red">
+        <a class="btn-floating btn-large waves-effect waves-light red">
           <i class="large material-icons">mode_edit</i>
         </a>
         <ul>
-          <li><a class="btn-floating green"><i class="material-icons">add</i></a></li>
+          <li>
+            <a class="btn-floating waves-effect waves-light modal-trigger green" href="#clocks-modal">
+              <i class="material-icons">add</i>
+            </a>
+          </li>
         </ul>
       </div>
-    </div>
-  </div>
 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-  <script src="index.js"></script>
+      <div id="clocks-modal" class="modal">
+        <div class="modal-content">
+          <h5>Incluir batida de ponto</h5>
+          <br />
+          <p>
+          <div class="row">
+            <form class="col s12" id="clocks-form">
+              <div class="input-field col s12">
+                <input id="date" name="date" type="text" class="validate datepicker" required>
+                <label for="date">Data</label>
+              </div>
+
+              <div class="input-field col s6">
+                <input id="clock-one" name="clockOne" type="time" class="validate" required>
+                <label for="clock-one">Entrada 1</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="clock-two" name="clockTwo" type="time" class="validate" required>
+                <label for="clock-two">Saída 1</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="clock-three" name="clockThree" type="time" class="validate" required>
+                <label for="clock-three">Entrada 2</label>
+              </div>
+              <div class="input-field col s6">
+                <input id="clock-four" name="clockFour" type="time" class="validate" required>
+                <label for="clock-four">Saída 2</label>
+              </div>
+              </p>
+          </div>
+          <div class="modal-footer">
+            <a href="#" class="modal-close waves-effect waves-light btn red">Fechar</a>
+            <a href="#" class="waves-effect waves-teal btn green" onclick="clockIn()">Salvar</a>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="index.js"></script>
 </body>
 
 </html>
