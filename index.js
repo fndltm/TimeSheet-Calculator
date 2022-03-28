@@ -129,7 +129,7 @@ function showHomePage() {
 
     homePage.classList.remove('hide');
 
-    if (user && user.clocks.length === 0) {
+    if (!user || user.clocks.length === 0) {
         emptyList.classList.remove('hide');
     } else {
         emptyList.classList.add('hide');
