@@ -14,7 +14,9 @@ const clocksForm = document.getElementById('clocks-form');
 onload = () => {
     M.Sidenav.init(document.querySelectorAll('.sidenav'), null);
     M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), null);
+    M.FloatingActionButton.init(document.querySelectorAll('.menu-fab-left'), { direction: 'left' });
     M.Modal.init(document.querySelectorAll('.modal'), null);
+    M.Dropdown.init(document.querySelectorAll('.dropdown-trigger'), null);
 
     const previousYear = new Date();
     previousYear.setFullYear(previousYear.getFullYear() - 1);
@@ -139,80 +141,77 @@ function showHomePage() {
         emptyList.classList.add('hide');
         clocksList.classList.remove('hide');
 
-        const labels = document.createElement('div');
-        labels.classList.add('row');
-
-        const labelDate = document.createElement('span');
-        labelDate.classList.add('col', 's4', 'center');
-        labelDate.innerText = 'DATAS';
-        labels.appendChild(labelDate);
-
-        const labelClockOne = document.createElement('span');
-        labelClockOne.classList.add('col', 's2', 'center');
-        labelClockOne.innerText = 'E1';
-        labels.appendChild(labelClockOne);
-
-        const labelClockTwo = document.createElement('span');
-        labelClockTwo.classList.add('col', 's2', 'center');
-        labelClockTwo.innerText = 'S1';
-        labels.appendChild(labelClockTwo);
-
-        const labelClockThree = document.createElement('span');
-        labelClockThree.classList.add('col', 's2', 'center');
-        labelClockThree.innerText = 'E2';
-        labels.appendChild(labelClockThree);
-
-        const labelClockFour = document.createElement('span');
-        labelClockFour.classList.add('col', 's2', 'center');
-        labelClockFour.innerText = 'S2';
-        labels.appendChild(labelClockFour);
-
-        clocksList.appendChild(labels);
-
-        const clocksCollection = document.createElement('div');
-        clocksCollection.classList.add('row');
         user.clocks.forEach(function (clock) {
-            const clocksItem = document.createElement('div');
-            clocksItem.classList.add('col', 's12');
+            const card = document.createElement('div');
+            card.classList.add('card');
+            card.innerHTML = '<a class="btn-floating btn-small halfway-fab waves-effect waves-light modal-trigger mr-24" href="#clocks-modal">' +
+                '<i class="material-icons">mode_edit</i>' +
+                '</a>' +
+                '<a class="btn-floating btn-small halfway-fab waves-effect waves-light modal-trigger red" href="#delete-clock-modal">' +
+                '<i class="material-icons">delete</i>' +
+                '</a>';
 
-            const dateItem = document.createElement('div');
-            dateItem.classList.add('col', 's4');
-            dateItem.innerText = clock.date;
+            const editFab = document.createElement('a');
+            editFab.classList.add('btn-floating', 'btn-small', 'halfway-fab', 'waves-effect', 'waves-light', 'modal-trigger', 'mr-24');
+            editFab.setAttribute('href', '#clocks-modal');
+            editFab.clock = clock;
+            editFab.addEventListener('click', loadClocks);
+            editFab.innerHTML = '<i class="material-icons">mode_edit</i>';
+
+            const deleteFab = document.createElement('a');
+            deleteFab.classList.add('btn-floating', 'btn-small', 'halfway-fab', 'waves-effect', 'waves-light', 'red');
+            deleteFab.clock = clock;
+            deleteFab.addEventListener('click', deleteClock);
+            deleteFab.innerHTML = '<i class="material-icons">delete</i>';
+
+            card.appendChild(editFab);
+            card.appendChild(deleteFab);
+
+            const cardContent = document.createElement('div');
+            cardContent.classList.add('card-content');
+
+            card.appendChild(cardContent);
+
+            const cardClocks = document.createElement('div');
+            cardClocks.classList.add('row', 'mt-3');
+
+            const cardTitle = document.createElement('span');
+            cardTitle.classList.add('card-title', 'grey-text', 'text-darken-2');
+            cardTitle.innerText = clock.date;
 
             const clockOneItem = document.createElement('span');
-            clockOneItem.classList.add('col', 's2', 'clock-item');
+            clockOneItem.classList.add('col', 's3', 'clock-item');
             clockOneItem.innerText = clock.clockOne;
 
             const clockTwoItem = document.createElement('span');
-            clockTwoItem.classList.add('col', 's2', 'clock-item');
+            clockTwoItem.classList.add('col', 's3', 'clock-item');
             clockTwoItem.innerText = clock.clockTwo;
 
             const clockThreeItem = document.createElement('span');
-            clockThreeItem.classList.add('col', 's2', 'clock-item');
+            clockThreeItem.classList.add('col', 's3', 'clock-item');
             clockThreeItem.innerText = clock.clockThree;
 
             const clockFourItem = document.createElement('span');
-            clockFourItem.classList.add('col', 's2', 'clock-item');
+            clockFourItem.classList.add('col', 's3', 'clock-item');
             clockFourItem.innerText = clock.clockFour;
 
-            const labelWorkedHours = document.createElement('div');
-            labelWorkedHours.classList.add('row');
+            const workedHours = document.createElement('b');
+            workedHours.classList.add('col', 's12', 'center', 'mt-3');
+            workedHours.innerText = 'Horas trabalhadas: ' + calculateTime(clock.clockOne, clock.clockTwo, clock.clockThree, clock.clockFour);
 
-            const valueWorkedHours = document.createElement('b');
-            valueWorkedHours.classList.add('col', 's12', 'center');
-            valueWorkedHours.innerText = 'Horas trabalhadas: ' + calculateTime(clock.clockOne, clock.clockTwo, clock.clockThree, clock.clockFour);
-            labelWorkedHours.appendChild(valueWorkedHours);
+            cardContent.appendChild(cardTitle);
 
-            clocksItem.appendChild(dateItem);
-            clocksItem.appendChild(clockOneItem);
-            clocksItem.appendChild(clockTwoItem);
-            clocksItem.appendChild(clockThreeItem);
-            clocksItem.appendChild(clockFourItem);
-            clocksItem.appendChild(labelWorkedHours);
+            cardClocks.appendChild(clockOneItem);
+            cardClocks.appendChild(clockTwoItem);
+            cardClocks.appendChild(clockThreeItem);
+            cardClocks.appendChild(clockFourItem);
 
-            clocksCollection.appendChild(clocksItem);
+            cardClocks.appendChild(workedHours);
+
+            cardContent.appendChild(cardClocks);
+
+            clocksList.appendChild(card);
         });
-        clocksList.appendChild(clocksCollection);
     }
 };
 
@@ -254,6 +253,32 @@ function logout() {
     window.location.reload();
 };
 
+function loadClocks(event) {
+    const clock = event.currentTarget.clock;
+
+    clocksForm.date.disabled = true;
+    clocksForm.date.value = clock.date;
+    document.getElementById('date-label').classList.add('active');
+
+    clocksForm.clockOne.value = clock.clockOne;
+    clocksForm.clockTwo.value = clock.clockTwo;
+    clocksForm.clockThree.value = clock.clockThree;
+    clocksForm.clockFour.value = clock.clockFour;
+};
+
+function deleteClock(event) {
+    const clock = event.currentTarget.clock;
+
+    if (user.clocks) {
+        const index = user.clocks.findIndex(function (u) { return u.date === clock.date; });
+        user.clocks.splice(index, index >= 0 ? 1 : 0);
+    }
+
+    updateLocalStorage();
+
+    window.location.reload();
+};
+
 function clockIn() {
     const date = clocksForm.date.value;
     const clockOne = clocksForm.clockOne.value;
@@ -274,7 +299,7 @@ function clockIn() {
     user.clocks.push({ date, clockOne, clockTwo, clockThree, clockFour });
     user.clocks.sort(function (c1, c2) { return new Date(c1.date) - new Date(c2.date); });
 
-    clocksForm.reset();
+    resetForm();
 
     M.Modal.getInstance(clocksModal).close();
 
@@ -293,4 +318,8 @@ function updateLocalStorage() {
     users.sort(function (u1, u2) { return u1.username - u2.username; });
 
     localStorage.setItem('users', JSON.stringify(users));
+};
+
+function resetForm() {
+    clocksForm.reset();
 };

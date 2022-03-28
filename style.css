@@ -36,12 +36,28 @@ body {
     margin: 1.6rem;
 }
 
+.mt-3 {
+    margin-top: 1.3rem;
+}
+
+.mt-6 {
+    margin-top: 1.6rem;
+}
+
 .ml-6 {
     margin-left: 1.6rem;
 }
 
 .mr-6 {
     margin-right: 1.6rem;
+}
+
+.mr-12 {
+    margin-right: 2rem;
+}
+
+.mr-24 {
+    margin-right: 3rem;
 }
 
 .mh-6 {
@@ -112,4 +128,8 @@ span.field-icon {
 
 .clock-item {
     color: #26a69a;
+}
+
+.card-content>.row {
+    margin-bottom: 0 !important;
 }
