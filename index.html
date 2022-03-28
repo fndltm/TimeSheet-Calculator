@@ -81,9 +81,9 @@
         </div>
       </div>
       <div class="row">
-        <a class="waves-effect waves-teal btn-flat col s12 center-align" onclick="showLoginPage()">Já possui uma
-          conta?
-          Entrar</a>
+        <a class="waves-effect waves-teal btn-flat col s12 center-align" onclick="showLoginPage()">
+          Já possui uma conta? Entrar
+        </a>
       </div>
     </form>
   </div>
@@ -106,6 +106,12 @@
     </div>
 
     <div id="clocks-wrapper">
+      <form id="search-form">
+        <div class="input-field">
+          <input id="search" type="search" name="search" onkeyup="searchDate()">
+          <label for="search"><i class="material-icons">search</i></label>
+        </div>
+      </form>
       <div id="clocks"></div>
 
       <div class="fixed-action-btn">

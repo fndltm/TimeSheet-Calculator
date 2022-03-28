@@ -1,4 +1,4 @@
-const users = JSON.parse(localStorage.getItem('users')) || [];
+let users = JSON.parse(localStorage.getItem('users')) || [];
 const user = JSON.parse(localStorage.getItem('loggedUser')) || undefined;
 
 const formsWrapper = document.getElementsByClassName('forms')[0];
@@ -7,6 +7,7 @@ const emptyList = document.getElementById('empty-list');
 const loginForm = document.getElementById('login-form');
 const signupForm = document.getElementById('signup-form');
 const homePage = document.getElementById('home');
+const searchForm = document.getElementById('search-form');
 const clocksList = document.getElementById('clocks');
 const clocksModal = document.getElementById('clocks-modal');
 const clocksForm = document.getElementById('clocks-form');
@@ -46,7 +47,7 @@ onload = () => {
     });
 
     if (user) {
-        showHomePage();
+        showHomePage(false);
     }
 };
 
@@ -124,7 +125,7 @@ function signup() {
     showLoginPage();
 };
 
-function showHomePage() {
+function showHomePage(isSearching) {
     while (clocksList.firstChild) {
         clocksList.removeChild(clocksList.lastChild);
     }
@@ -135,10 +136,13 @@ function showHomePage() {
 
     homePage.classList.remove('hide');
 
-    if (!user || user.clocks.length === 0) {
+    if (!isSearching && (!user || user.clocks.length === 0)) {
         emptyList.classList.remove('hide');
+        searchForm.classList.add('hide');
     } else {
         emptyList.classList.add('hide');
+
+        searchForm.classList.remove('hide');
         clocksList.classList.remove('hide');
 
         user.clocks.forEach(function (clock) {
@@ -253,6 +257,31 @@ function logout() {
     window.location.reload();
 };
 
+function searchDate() {
+    const searchValue = searchForm.search.value;
+
+    const currentUser = users.find(function (u) {
+        return user.username === u.username;
+    });
+    user.clocks = currentUser.clocks;
+
+    const userClocks = user.clocks.filter(function (u) {
+        return u.date.toString().includes(searchValue) ||
+            u.clockOne.toString().includes(searchValue) ||
+            u.clockTwo.toString().includes(searchValue) ||
+            u.clockThree.toString().includes(searchValue) ||
+            u.clockFour.toString().includes(searchValue);
+    });
+
+    if (userClocks) {
+        user.clocks = userClocks;
+    } else {
+        user.clocks = [];
+    }
+
+    showHomePage(true);
+};
+
 function loadClocks(event) {
     const clock = event.currentTarget.clock;
 
@@ -297,7 +326,13 @@ function clockIn() {
     }
 
     user.clocks.push({ date, clockOne, clockTwo, clockThree, clockFour });
-    user.clocks.sort(function (c1, c2) { return new Date(c1.date) - new Date(c2.date); });
+    user.clocks = user.clocks.sort(function (c1, c2) {
+        const dateOneDayMonthYear = c1.date.toString().split('/');
+        const dateTwoDayMonthYear = c2.date.toString().split('/');
+
+        return new Date(dateOneDayMonthYear[2], dateOneDayMonthYear[1], dateOneDayMonthYear[0], 0, 0, 0, 0) -
+            new Date(dateTwoDayMonthYear[2], dateTwoDayMonthYear[1], dateTwoDayMonthYear[0], 0, 0, 0, 0);
+    });
 
     resetForm();
 
@@ -315,7 +350,7 @@ function updateLocalStorage() {
     users.splice(index, index >= 0 ? 1 : 0);
 
     users.push(user);
-    users.sort(function (u1, u2) { return u1.username - u2.username; });
+    users = users.sort(function (u1, u2) { return u1.username - u2.username; });
 
     localStorage.setItem('users', JSON.stringify(users));
 };
