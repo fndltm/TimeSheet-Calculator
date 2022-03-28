@@ -29,6 +29,8 @@
 
 <body>
   <div class="container forms form-content">
+
+    <!-- Formulário de Login -->
     <form class="col s12" id="login-form">
       <h2>Login</h2>
       <div class="row">
@@ -55,6 +57,7 @@
       </div>
     </form>
 
+    <!-- Formulário de Cadastro -->
     <form class="col s12 hide" id="signup-form">
       <h2>Cadastro</h2>
       <div class="row">
@@ -89,6 +92,7 @@
   </div>
 
   <div class="full-size hide" id="home">
+    <!-- Navbar com botão de logout -->
     <div class="navbar-fixed">
       <nav>
         <div class="nav-wrapper">
@@ -100,26 +104,30 @@
       </nav>
     </div>
 
+    <!-- Template para quando as batidas de ponto estiverem vazias -->
     <div class="empty-list" id="empty-list">
       <img class="empty-list-image" src="./assets/images/timesheet_calculator.svg" />
       <h6>Nenhuma batida inserida!</h6>
     </div>
 
     <div id="clocks-wrapper">
+      <!-- Campo de busca -->
       <form id="search-form">
         <div class="input-field">
-          <input id="search" type="search" name="search" onkeyup="searchDate()">
+          <input id="search" type="search" name="search" placeholder="Buscar por data ou batida" onkeyup="filterCards()">
           <label for="search"><i class="material-icons">search</i></label>
         </div>
       </form>
       <div id="clocks"></div>
 
+      <!-- FAB de adicionar batida -->
       <div class="fixed-action-btn">
         <a class="btn-floating btn-large waves-effect waves-light modal-trigger green" href="#clocks-modal">
           <i class="large material-icons">add</i>
         </a>
       </div>
 
+      <!-- Modal de adição/edição de ponto -->
       <div id="clocks-modal" class="modal">
         <div class="modal-content">
           <h5>Batida de ponto</h5>

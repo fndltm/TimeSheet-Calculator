@@ -12,6 +12,9 @@ const clocksList = document.getElementById('clocks');
 const clocksModal = document.getElementById('clocks-modal');
 const clocksForm = document.getElementById('clocks-form');
 
+/**
+ * Ao carregar conteúdo por completo, inicializar componentes do Materialize.css
+ */
 onload = () => {
     M.Sidenav.init(document.querySelectorAll('.sidenav'), null);
     M.FloatingActionButton.init(document.querySelectorAll('.fixed-action-btn'), null);
@@ -46,11 +49,15 @@ onload = () => {
         defaultDate: new Date()
     });
 
+    // Se existe o usuário, mostrar tela principal
     if (user) {
         showHomePage(false);
     }
 };
 
+/**
+ * Método responsável por realizar toggle no campo senha, exibindo ou escondendo a senha
+ */
 function togglePassword() {
     const passwordField = document.getElementById('password');
 
@@ -63,6 +70,9 @@ function togglePassword() {
     }
 };
 
+/**
+ * Método responsável por realizar toggle no campo senha, exibindo ou escondendo a senha
+ */
 function signupTogglePassword() {
     const passwordField = document.getElementById('signup-password');
 
@@ -75,6 +85,9 @@ function signupTogglePassword() {
     }
 };
 
+/**
+ * Método responsável por validar usuário e senha dos usuários cadastros e logar no sistema
+ */
 function login() {
     const findUser = users.find(function (user) { return user.username === loginForm.username.value && user.password === loginForm.password.value; });
     if (findUser) {
@@ -85,6 +98,9 @@ function login() {
     }
 };
 
+/**
+ * Método responsável por mostrar a tela de cadastro
+ */
 function showSignupPage() {
     loginForm.classList.add('hide');
     homePage.classList.add('hide');
@@ -93,6 +109,9 @@ function showSignupPage() {
     signupForm.classList.remove('hide');
 };
 
+/**
+ * Método responsável por mostrar a tela de login
+ */
 function showLoginPage() {
     formsWrapper.classList.remove('hide');
     loginForm.classList.remove('hide');
@@ -101,6 +120,9 @@ function showLoginPage() {
     homePage.classList.add('hide');
 };
 
+/**
+ * Método responsável por cadastrar um usuário no vetor users
+ */
 function signup() {
     if (users.find(function (user) { return user.username === signupForm.username.value; })) {
         M.toast({ html: 'Usuário já existente!' });
@@ -125,6 +147,10 @@ function signup() {
     showLoginPage();
 };
 
+/**
+ * Método responsável por mostrar tela principal, realizando a montagem das batidas de ponto na tela,
+ * sendo cada card é uma batida de ponto
+ */
 function showHomePage(isSearching) {
     while (clocksList.firstChild) {
         clocksList.removeChild(clocksList.lastChild);
@@ -219,6 +245,10 @@ function showHomePage(isSearching) {
     }
 };
 
+/**
+ * Método responsável por calcular a diferença de tempo (horas e minutos)
+ * a partir da batida de ponto cadastrada pelo usuário e retornar as horas trabalhadas
+ */
 function calculateTime(startOne, endOne, startTwo, endTwo) {
     const startOneDate = new Date();
     startOneDate.setHours(startOne.split(':')[0], startOne.split(':')[1], 0, 0);
@@ -247,17 +277,26 @@ function calculateTime(startOne, endOne, startTwo, endTwo) {
     return formatWithZero(hourDifference) + ':' + formatWithZero(minuteDifference);
 };
 
+/**
+ * Método responsável por formatar as horas/minutos corretamente, com 2 dígitos
+ */
 function formatWithZero(value) {
     return value.toString().length < 2 ? '0' + value : value;
 };
 
+/**
+ * Método responsável por realizar o logout do usuário
+ */
 function logout() {
     localStorage.removeItem('loggedUser');
 
     window.location.reload();
 };
 
-function searchDate() {
+/**
+ * Método responsável por filtrar uma data ou algum dos quatro campos de batida
+ */
+function filterCards() {
     const searchValue = searchForm.search.value;
 
     const currentUser = users.find(function (u) {
@@ -282,6 +321,10 @@ function searchDate() {
     showHomePage(true);
 };
 
+/**
+ * Método responsável por carregar no modal os valores que serão editados
+ * de acordo com o item clicado no FAB de edição
+ */
 function loadClocks(event) {
     const clock = event.currentTarget.clock;
 
@@ -295,6 +338,10 @@ function loadClocks(event) {
     clocksForm.clockFour.value = clock.clockFour;
 };
 
+/**
+ * Método responsável por deletar a batida de ponto
+ * de acordo com o item clicado no FAB de exclusão
+ */
 function deleteClock(event) {
     const clock = event.currentTarget.clock;
 
@@ -308,6 +355,9 @@ function deleteClock(event) {
     window.location.reload();
 };
 
+/**
+ * Método responsável por salvar a batida de ponto, ordenando as batidas
+ */
 function clockIn() {
     const date = clocksForm.date.value;
     const clockOne = clocksForm.clockOne.value;
@@ -343,6 +393,10 @@ function clockIn() {
     window.location.reload();
 };
 
+/**
+ * Método responsável por armazenar no localStorage as batidas de ponto do usuário,
+ * bem como os usuários da aplicação
+ */
 function updateLocalStorage() {
     localStorage.setItem('loggedUser', JSON.stringify(user));
 
@@ -355,6 +409,9 @@ function updateLocalStorage() {
     localStorage.setItem('users', JSON.stringify(users));
 };
 
+/**
+ * Método responsável por resetar o formulário de batidas de ponto
+ */
 function resetForm() {
     clocksForm.reset();
 };
