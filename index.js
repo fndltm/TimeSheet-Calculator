@@ -358,3 +358,5 @@ function updateLocalStorage() {
 function resetForm() {
     clocksForm.reset();
 };
+
+navigator.serviceWorker.register('./timesheet-calculator-sw.js');
