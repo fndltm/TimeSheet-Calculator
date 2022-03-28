@@ -8,7 +8,7 @@ self.addEventListener('install', function (event) {
             '/manifest.json',
             '/style.css',
             '/index.js',
-            '/assets/fonts/Poppins-Regular.ttf',
+            '/assets/fontes/Poppins-Regular.ttf',
             '/assets/icons/android-icon-36x36.png',
             '/assets/icons/android-icon-48x48.png',
             '/assets/icons/android-icon-72x72.png',
