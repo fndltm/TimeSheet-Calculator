@@ -48,7 +48,7 @@ onload = () => {
     }
 };
 
-togglePassword = () => {
+function togglePassword() {
     const passwordField = document.getElementById('password');
 
     if (passwordField.type === 'password') {
@@ -60,7 +60,7 @@ togglePassword = () => {
     }
 };
 
-signupTogglePassword = () => {
+function signupTogglePassword() {
     const passwordField = document.getElementById('signup-password');
 
     if (passwordField.type === 'password') {
@@ -72,8 +72,8 @@ signupTogglePassword = () => {
     }
 };
 
-login = () => {
-    const user = users.find(user => user.username === loginForm.username.value && user.password === loginForm.password.value);
+function login() {
+    const user = users.find(function (user) { return user.username === loginForm.username.value && user.password === loginForm.password.value; });
     if (user) {
         localStorage.setItem('loggedUser', JSON.stringify(user));
         showHomePage();
@@ -82,7 +82,7 @@ login = () => {
     }
 };
 
-showSignupPage = () => {
+function showSignupPage() {
     loginForm.classList.add('hide');
     homePage.classList.add('hide');
 
@@ -90,7 +90,7 @@ showSignupPage = () => {
     signupForm.classList.remove('hide');
 };
 
-showLoginPage = () => {
+function showLoginPage() {
     formsWrapper.classList.remove('hide');
     loginForm.classList.remove('hide');
 
@@ -98,8 +98,8 @@ showLoginPage = () => {
     homePage.classList.add('hide');
 };
 
-signup = () => {
-    if (users.find(user => user.username === signupForm.username.value)) {
+function signup() {
+    if (users.find(function (user) { return user.username === signupForm.username.value; })) {
         M.toast({ html: 'Usuário já existente!' });
         return;
     }
@@ -122,7 +122,7 @@ signup = () => {
     showLoginPage();
 };
 
-showHomePage = () => {
+function showHomePage() {
     formsWrapper.classList.add('hide');
     loginForm.classList.add('hide');
     signupForm.classList.add('hide');
@@ -131,8 +131,6 @@ showHomePage = () => {
 
     if (user && user.clocks.length === 0) {
         emptyList.classList.remove('hide');
-
-        clocksList.classList.add('hide');
     } else {
         emptyList.classList.add('hide');
         clocksList.classList.remove('hide');
@@ -169,7 +167,7 @@ showHomePage = () => {
 
         const clocksCollection = document.createElement('div');
         clocksCollection.classList.add('row');
-        user.clocks.forEach(clock => {
+        user.clocks.forEach(function (clock) {
             const clocksItem = document.createElement('div');
             clocksItem.classList.add('col', 's12');
 
@@ -214,7 +212,7 @@ showHomePage = () => {
     }
 };
 
-calculateTime = (startOne, endOne, startTwo, endTwo) => {
+function calculateTime(startOne, endOne, startTwo, endTwo) {
     const startOneDate = new Date();
     startOneDate.setHours(startOne.split(':')[0], startOne.split(':')[1], 0, 0);
 
@@ -242,17 +240,17 @@ calculateTime = (startOne, endOne, startTwo, endTwo) => {
     return formatWithZero(hourDifference) + ':' + formatWithZero(minuteDifference);
 };
 
-formatWithZero = (value) => {
+function formatWithZero(value) {
     return value.toString().length < 2 ? '0' + value : value;
 };
 
-logout = () => {
+function logout() {
     localStorage.removeItem('loggedUser');
 
     showLoginPage();
 };
 
-clockIn = () => {
+function clockIn() {
     const date = clocksForm.date.value;
     const clockOne = clocksForm.clockOne.value;
     const clockTwo = clocksForm.clockTwo.value;
@@ -265,12 +263,12 @@ clockIn = () => {
     }
 
     if (user.clocks) {
-        const index = user.clocks.findIndex(u => u.date === date);
+        const index = user.clocks.findIndex(function (u) { return u.date === date; });
         user.clocks.splice(index, index >= 0 ? 1 : 0);
     }
 
     user.clocks.push({ date, clockOne, clockTwo, clockThree, clockFour });
-    user.clocks.sort((c1, c2) => new Date(c1.date) - new Date(c2.date));
+    user.clocks.sort(function (c1, c2) { return new Date(c1.date) - new Date(c2.date); });
 
     clocksForm.reset();
 
@@ -281,14 +279,14 @@ clockIn = () => {
     window.location.reload();
 };
 
-updateLocalStorage = () => {
+function updateLocalStorage() {
     localStorage.setItem('loggedUser', JSON.stringify(user));
 
-    const index = users.findIndex(u => u.username === user.username);
+    const index = users.findIndex(function (u) { return u.username === user.username; });
     users.splice(index, index >= 0 ? 1 : 0);
 
     users.push(user);
-    users.sort((u1, u2) => u1.username - u2.username);
+    users.sort(function (u1, u2) { return u1.username - u2.username; });
 
     localStorage.setItem('users', JSON.stringify(users));
 };
